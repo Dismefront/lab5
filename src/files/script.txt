@@ -1,0 +1,11 @@
+add
+asdf
+12 12
+1
+2020-01-01
+CLEANER
+FIRED
+1
+RED
+RED
+ITALY
