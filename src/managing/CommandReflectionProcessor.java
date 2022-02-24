@@ -3,6 +3,7 @@ package managing;
 import maintain.Pair;
 
 import java.io.File;
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -28,7 +29,6 @@ public class CommandReflectionProcessor {
         Pair<String, ArrayList<String>> command = CommandParser.getSplit(inp);
 
         String[] lst = listDeclaredCommands();
-        boolean cool = false;
         for (String s : lst) {
             Class<?> clazz;
             try {
@@ -40,9 +40,9 @@ public class CommandReflectionProcessor {
             if (annotation != null && annotation.name().equals(command.first())) {
 
                 try {
-                    cool = true;
                     Command c = (Command)clazz.getConstructor(String.class).newInstance(inp);
                     c.execute();
+                    return true;
                 }
                 catch (Exception e) {
                     e.printStackTrace();
@@ -50,8 +50,8 @@ public class CommandReflectionProcessor {
 
             }
         }
-
-        return cool;
+        System.out.println("Wrong command input");
+        return false;
     }
 
 }

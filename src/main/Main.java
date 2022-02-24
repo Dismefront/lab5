@@ -1,5 +1,6 @@
 package main;
 
+import commands.CommandExecuteScript;
 import csv.FileHelper;
 import managing.*;
 import stored.*;
@@ -22,8 +23,7 @@ public class Main {
         }
 
         while (true) {
-            if (!CommandReflectionProcessor.launchInput())
-                System.out.println("Команда неправильная. Повторите ввод");
+            CommandReflectionProcessor.launchInput();
         }
 
     }

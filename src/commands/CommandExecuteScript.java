@@ -12,6 +12,9 @@ import java.util.Scanner;
         "В скрипте содержатся команды в таком же виде, " +
         "в котором их вводит пользователь в интерактивном режиме")
 public class CommandExecuteScript extends ArgsCommand {
+
+    public static int cntExecuted = 0;
+
     public CommandExecuteScript(String command) {
         super(command);
     }
@@ -20,8 +23,17 @@ public class CommandExecuteScript extends ArgsCommand {
         super();
     }
 
+    private boolean cntExecutedNotValid() {
+        return cntExecuted >= 100;
+    }
+
     @Override
     public void execute() {
+        cntExecuted++;
+        if (cntExecutedNotValid()) {
+            System.out.println("The command launched " + cntExecuted + " times. Stopping");
+            return;
+        }
         try {
             File file = new File(System.getProperty("user.dir")
                     + "/src/" + Vars.currentFilePath + "/" + args.get(0));
@@ -36,5 +48,6 @@ public class CommandExecuteScript extends ArgsCommand {
             return;
         }
         System.out.println("Script finished executing");
+        cntExecuted = 0;
     }
 }
