@@ -1,1 +1,2 @@
 execute_script script_3.txt
+info

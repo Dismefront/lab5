@@ -23,7 +23,7 @@ public class Main {
         }
 
         while (true) {
-            CommandReflectionProcessor.launchInput();
+            CommandReflectionProcessor.launchInput(Vars.globalScanner);
         }
 
     }

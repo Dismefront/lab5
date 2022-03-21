@@ -42,7 +42,7 @@ public class WorkerCollection implements CollectionManager<Worker>, Iterable<Wor
         String res = "";
         res += "<Worker> collection manager\n";
         res += "Collection created on: " + this.initDate + "\n";
-        res += "Number of elements in collection: " + this.collection.size() + "\n";
+        res += "Number of elements in collection: " + this.collection.size();
         return res;
     }
 

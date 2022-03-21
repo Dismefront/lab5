@@ -23,8 +23,7 @@ public class CommandReflectionProcessor {
         return result;
     }
 
-    public static boolean launchInput() {
-        Scanner scanner = Vars.globalScanner;
+    public static boolean launchInput(Scanner scanner) {
         String inp = scanner.nextLine();
         Pair<String, ArrayList<String>> command = CommandParser.getSplit(inp);
 

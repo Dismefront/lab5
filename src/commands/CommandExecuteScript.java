@@ -6,14 +6,14 @@ import managing.PointCommand;
 import managing.Vars;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.HashMap;
 import java.util.Scanner;
 
 @PointCommand(name="execute_script", description = "считать и исполнить скрипт из указанного файла. " +
         "В скрипте содержатся команды в таком же виде, " +
         "в котором их вводит пользователь в интерактивном режиме")
 public class CommandExecuteScript extends ArgsCommand {
-
-    public static int cntExecuted = 0;
 
     public CommandExecuteScript(String command) {
         super(command);
@@ -23,31 +23,29 @@ public class CommandExecuteScript extends ArgsCommand {
         super();
     }
 
-    private boolean cntExecutedNotValid() {
-        return cntExecuted >= 100;
-    }
+    private static HashMap<File, Boolean> files = new HashMap<>();
 
     @Override
     public void execute() {
-        cntExecuted++;
-        if (cntExecutedNotValid()) {
-            System.out.println("The command launched " + cntExecuted + " times. Stopping");
-            return;
-        }
         try {
             File file = new File(System.getProperty("user.dir")
                     + "/src/" + Vars.currentFilePath + "/" + args.get(0));
-            Vars.globalScanner = new Scanner(file);
-            while (Vars.globalScanner.hasNext()) {
-                CommandReflectionProcessor.launchInput();
+            if (files.containsKey(file)) {
+                System.out.println("Recursion found.");
+                return;
             }
-            Vars.globalScanner = new Scanner(System.in);
+            System.out.println(file + " started executing...");
+            files.put(file, Boolean.TRUE);
+            Scanner sc = new Scanner(file);
+            while (sc.hasNext()) {
+                CommandReflectionProcessor.launchInput(sc);
+            }
         }
-        catch (Exception e) {
+        catch (FileNotFoundException e) {
             System.out.println("Couldn't find file");
             return;
         }
+        files.clear();
         System.out.println("Script finished executing");
-        cntExecuted = 0;
     }
 }
