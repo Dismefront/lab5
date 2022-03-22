@@ -15,9 +15,9 @@ public class CommandHelp extends NoArgsCommand {
 
     @Override
     public void execute() {
-        String[] lst = CommandReflectionProcessor.listDeclaredCommands();
+        //String[] lst = CommandReflectionProcessor.listDeclaredCommands();
         System.out.println("The list of allowed commands: ");
-        for (String s : lst) {
+        for (String s : CommandReflectionProcessor.commands) {
             Class<?> clazz;
             try {
                 clazz = Class.forName(Vars.currentCommandFolderPath + "." + s);

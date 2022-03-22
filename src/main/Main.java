@@ -6,11 +6,12 @@ import managing.*;
 import stored.*;
 
 import java.io.File;
+import java.sql.SQLOutput;
 import java.time.LocalDate;
 import java.util.Scanner;
 
 /**
- * @author Samnier(Erik Romaikin)
+ * @author Dismefront(Erik Romaikin)
  */
 
 public class Main {

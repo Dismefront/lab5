@@ -5,6 +5,7 @@ import maintain.Pair;
 import java.io.File;
 import java.sql.SQLOutput;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Scanner;
 
 public class CommandReflectionProcessor {
@@ -23,12 +24,31 @@ public class CommandReflectionProcessor {
         return result;
     }
 
+    public static String[] commands = {
+            "CommandAdd",
+            "CommandAddIfMin",
+            "CommandClear",
+            "CommandCountBySalary",
+            "CommandExecuteScript",
+            "CommandExit",
+            "CommandHelp",
+            "CommandInfo",
+            "CommandPrintDescending",
+            "CommandPrintFieldDescendingSalary",
+            "CommandRemoveById",
+            "CommandRemoveFirst",
+            "CommandSave",
+            "CommandShow",
+            "CommandSort",
+            "CommandUpdateId"
+    };
+
     public static boolean launchInput(Scanner scanner) {
         String inp = scanner.nextLine();
         Pair<String, ArrayList<String>> command = CommandParser.getSplit(inp);
 
-        String[] lst = listDeclaredCommands();
-        for (String s : lst) {
+        //String[] lst = listDeclaredCommands();
+        for (String s : commands) {
             Class<?> clazz;
             try {
                 clazz = Class.forName(Vars.currentCommandFolderPath + "." + s);

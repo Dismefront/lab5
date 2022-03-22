@@ -34,7 +34,7 @@ public class CommandExecuteScript extends ArgsCommand {
                 System.out.println("Recursion found.");
                 return;
             }
-            System.out.println(file + " started executing...");
+            System.out.println("executing " + file + "...");
             files.put(file, Boolean.TRUE);
             Scanner sc = new Scanner(file);
             while (sc.hasNext()) {
@@ -42,6 +42,7 @@ public class CommandExecuteScript extends ArgsCommand {
             }
         }
         catch (FileNotFoundException e) {
+            files.clear();
             System.out.println("Couldn't find file");
             return;
         }
