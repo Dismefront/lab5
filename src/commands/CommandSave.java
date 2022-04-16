@@ -21,7 +21,7 @@ public class CommandSave extends NoArgsCommand {
     private String getStr() {
         String res = "";
         for (Worker it : Vars.curCol.getCollection()) {
-            String a = "", b = "", c = "", d = "", e = "", f = "", g = "", h = "", i = "", j = "";
+            String a = "", b = "", c = "", d = "", e = "", f = "", g = "", h = "", i = "", j = "", pos = "";
             a = it.getId().toString();
             if (it.getName() != null)
                 b = it.getName();
@@ -37,6 +37,8 @@ public class CommandSave extends NoArgsCommand {
                 g = it.getStatus().name();
             if (it.getPerson().getEyeColor() != null)
                 h = it.getPerson().getEyeColor().name();
+            if (it.getPosition() != null)
+                pos = it.getPosition();
             if (it.getPerson().getHairColor() != null)
                 i = it.getPerson().getHairColor().name();
             if (it.getPerson().getNationality() != null)
@@ -44,7 +46,7 @@ public class CommandSave extends NoArgsCommand {
 
             res += a + "," + b + "," + c + "," +
                     d + "," + e + "," +
-                    it.getSalary() + "," + f + "," + g + "," +
+                    it.getSalary() + "," + f + "," + pos + "," + g + "," +
                     it.getPerson().getWeight() + "," + h + "," +
                     i + "," + j + "\n";
         }
@@ -55,8 +57,7 @@ public class CommandSave extends NoArgsCommand {
     public void execute() {
         String data = "id,name,coordinates/x,coordinates/y,creationDate,salary," +
                 "startDate,position,status,person/weight,person/eyeColor,person/hairColor,person/nationality\n";
-        String path = System.getProperty("user.dir")
-                + "/src/" + Vars.currentFilePath + "/" + Vars.saveFile;
+        String path = Vars.saveFile;
         try {
             String str = this.getStr();
             FileOutputStream out = new FileOutputStream(path);

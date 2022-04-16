@@ -21,9 +21,14 @@ public class CommandAdd extends NoArgsCommand {
 
     @Override
     public void execute() {
-        Worker w = InputParser.getWorkerFromInput();
-        Vars.curCol.add(w);
-        System.out.println("Successfully added");
+        try {
+            Worker w = InputParser.getWorkerFromInput();
+            Vars.curCol.add(w);
+            System.out.println("Successfully added");
+        }
+        catch (Exception ex) {
+            System.exit(0);
+        }
     }
 
 }

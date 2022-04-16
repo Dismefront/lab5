@@ -9,7 +9,11 @@ import java.util.Scanner;
 
 public class InputParser {
 
-    public static Worker getWorkerFromInput() {
+    static public boolean isBlank(String name) {
+        return name == null || name.isEmpty();
+    }
+
+    public static Worker getWorkerFromInput() throws NoSuchElementException {
         String name;
         Coordinates coords;
         Long salary;
@@ -25,18 +29,37 @@ public class InputParser {
         Scanner in = Vars.globalScanner;
 
         System.out.println("Введите имя:");
+
         name = in.nextLine();
-        while (name.isBlank()) {
+        while (isBlank(name.trim())) {
             System.out.println("Неверное имя. Повторите ввод");
             name = in.nextLine();
         }
 
-        System.out.println("Введите координаты x y");
+        System.out.println("Введите координаты x");
         String[] temp = in.nextLine().split(" ");
+        float x;
         while (true) {
             try {
-                float x = Float.parseFloat(temp[0]);
-                int y = Integer.parseInt(temp[1]);
+                x = Float.parseFloat(temp[0]);
+                if (!Coordinates.validateX(x)) {
+                    System.out.println("Out of boundaries");
+                    temp = in.nextLine().split(" ");
+                    continue;
+                }
+                break;
+            }
+            catch (NumberFormatException e) {
+                System.out.println("Неверный ввод. Повторите");
+                temp = in.nextLine().split(" ");
+            }
+        }
+
+        System.out.println("Введите координаты y");
+        temp = in.nextLine().split(" ");
+        while (true) {
+            try {
+                int y = Integer.parseInt(temp[0]);
                 coords = new Coordinates(x, y);
                 if (!coords.isValid())
                     throw new NumberFormatException();
@@ -45,10 +68,6 @@ public class InputParser {
             catch (NumberFormatException e) {
                 System.out.println("Неверный ввод. Повторите");
                 temp = in.nextLine().split(" ");
-            }
-            catch (NoSuchElementException e) {
-                System.out.println("Неверный ввод. Повторите");
-                in = new Scanner(System.in);
             }
         }
 
@@ -61,13 +80,9 @@ public class InputParser {
             catch (NumberFormatException e) {
                 System.out.println("Неверный ввод. Повторите");
             }
-            catch (NoSuchElementException e) {
-                System.out.println("Неверный ввод. Повторите");
-                in = new Scanner(System.in);
-            }
         }
 
-        System.out.println("Введите дату");
+        System.out.println("Введите дату yyyy-mm-dd");
         while (true) {
             try {
                 date = LocalDate.parse(in.nextLine());
@@ -76,10 +91,6 @@ public class InputParser {
             catch (DateTimeParseException e) {
                 System.out.println("Неверный ввод. Повторите");
             }
-            catch (NoSuchElementException e) {
-                System.out.println("Неверный ввод. Повторите");
-                in = new Scanner(System.in);
-            }
         }
 
         System.out.println("Введите позицию");
@@ -87,7 +98,7 @@ public class InputParser {
         while (true) {
             try {
                 String temp1 = in.nextLine();
-                if (temp1.isBlank())
+                if (isBlank(temp1))
                     pos = null;
                 else
                     pos = Position.valueOf(temp1);
@@ -96,10 +107,6 @@ public class InputParser {
             catch (IllegalArgumentException e) {
                 System.out.println("Неверный ввод. Повторите");
             }
-            catch (NoSuchElementException e) {
-                System.out.println("Неверный ввод. Повторите");
-                in = new Scanner(System.in);
-            }
         }
 
         System.out.println("Введите статус");
@@ -107,7 +114,7 @@ public class InputParser {
         while (true) {
             try {
                 String temp1 = in.nextLine();
-                if (temp1.isBlank())
+                if (isBlank(temp1))
                     st = null;
                 else
                     st = Status.valueOf(temp1);
@@ -115,10 +122,6 @@ public class InputParser {
             }
             catch (IllegalArgumentException e) {
                 System.out.println("Неверный ввод. Повторите");
-            }
-            catch (NoSuchElementException e) {
-                System.out.println("Неверный ввод. Повторите");
-                in = new Scanner(System.in);
             }
         }
 
@@ -133,10 +136,6 @@ public class InputParser {
             catch (NumberFormatException e) {
                 System.out.println("Неверный ввод. Повторите");
             }
-            catch (NoSuchElementException e) {
-                System.out.println("Неверный ввод. Повторите");
-                in = new Scanner(System.in);
-            }
         }
 
         System.out.println("Введите цвет глаз человека");
@@ -144,7 +143,7 @@ public class InputParser {
         while (true) {
             try {
                 String temp1 = in.nextLine();
-                if (temp1.isBlank())
+                if (isBlank(temp1))
                     eyeC = null;
                 else
                     eyeC = Color.valueOf(temp1);
@@ -153,10 +152,6 @@ public class InputParser {
             catch (IllegalArgumentException e) {
                 System.out.println("Неверный ввод. Повторите");
             }
-            catch (NoSuchElementException e) {
-                System.out.println("Неверный ввод. Повторите");
-                in = new Scanner(System.in);
-            }
         }
 
         System.out.println("Введите цвет волос человека");
@@ -164,7 +159,7 @@ public class InputParser {
         while (true) {
             try {
                 String temp1 = in.nextLine();
-                if (temp1.isBlank())
+                if (isBlank(temp1))
                     hairC = null;
                 else
                     hairC = Color.valueOf(temp1);
@@ -173,10 +168,6 @@ public class InputParser {
             catch (IllegalArgumentException e) {
                 System.out.println("Неверный ввод. Повторите");
             }
-            catch (NoSuchElementException e) {
-                System.out.println("Неверный ввод. Повторите");
-                in = new Scanner(System.in);
-            }
         }
 
         System.out.println("Введите национальность человека");
@@ -184,7 +175,7 @@ public class InputParser {
         while (true) {
             try {
                 String temp1 = in.nextLine();
-                if (temp1.isBlank())
+                if (isBlank(temp1))
                     pcountry = null;
                 else
                     pcountry = Country.valueOf(temp1);
@@ -192,10 +183,6 @@ public class InputParser {
             }
             catch (IllegalArgumentException e) {
                 System.out.println("Неверный ввод. Повторите");
-            }
-            catch (NoSuchElementException e) {
-                System.out.println("Неверный ввод. Повторите");
-                in = new Scanner(System.in);
             }
         }
         person = new Person(pweight, eyeC, hairC, pcountry);

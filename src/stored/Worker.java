@@ -76,9 +76,14 @@ public class Worker implements Collectionable {
         return this.startDate;
     }
 
-    @Override
-    public Position getPosition() {
-        return this.position;
+    public String getPosition() {
+        if (this.position == Position.CLEANER)
+            return "CLEANER";
+        if (this.position == Position.HEAD_OF_DEPARTMENT)
+            return "HEAD_OF_DEPARTMENT";
+        if (this.position == Position.MANAGER_OF_CLEANING)
+            return "MANAGER_OF_CLEANING";
+        return "";
     }
 
     @Override
@@ -96,10 +101,14 @@ public class Worker implements Collectionable {
         return Long.compare(this.salary, worker.getSalary());
     }
 
+    public boolean isBlank(String name) {
+        return name == null || name.isEmpty();
+    }
+
     @Override
     public boolean isValid() {
         return this.coordinates != null &&
-                !this.name.isBlank() && this.coordinates.isValid() &&
+                !isBlank(this.name) && this.coordinates.isValid() &&
                 this.salary > 0 && this.id > 0 &&
                 this.startDate != null && this.creationDate != null &&
                 this.person != null;
@@ -109,10 +118,10 @@ public class Worker implements Collectionable {
     public String toString() {
         String pos = this.position == null ? "null" : this.position.name();
         String st = this.status == null ? "null" : this.status.name();
-        return "(" + this.id + ", " + this.getName() +
-                ", " + this.coordinates + ", " + this.creationDate + ", " +
-                this.salary + ", " + this.startDate + ", " + pos + ", " +
-                st + ", " + this.person + ")";
+        return "(" + this.id + ", name:" + this.getName() +
+                ", coords:" + this.coordinates + ", creDate:" + this.creationDate + ", salary:" +
+                this.salary + ", startDate:" + this.startDate + ", Pos:" + pos + ", status:" +
+                st + ", person" + this.person + ")";
     }
 
 }

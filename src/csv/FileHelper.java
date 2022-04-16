@@ -16,14 +16,13 @@ public class FileHelper {
      */
     public static void addFromCsvFile(String filename) {
         try {
-
-            File file = new File(System.getProperty("user.dir")
-                    + "/src/" + Vars.currentFilePath + "/" + filename);
+            System.out.println("Reading " + filename);
+            File file = new File(filename);
             Scanner fileInp = new Scanner(file);
             int i = 0;
             while (fileInp.hasNext()) {
                 i++;
-                String[] line = fileInp.nextLine().split(",");
+                String[] line = fileInp.nextLine().split(",", -1);
                 if (i == 1)
                     continue;
                 for (int j = 0; j < line.length; j++) {
@@ -46,10 +45,15 @@ public class FileHelper {
                 else
                     coords = null;
                 LocalDate date;
-                if (line[4] != null)
-                    date = LocalDate.parse(line[4]);
-                else
-                    date = null;
+                try {
+                    if (line[4] != null)
+                        date = LocalDate.parse(line[4]);
+                    else
+                        date = null;
+                }
+                catch (Exception ex) {
+                    date = LocalDate.now();
+                }
                 Long salary;
                 if (line[5] != null)
                     salary = Long.parseLong(line[5]);
@@ -109,9 +113,9 @@ public class FileHelper {
             System.out.println("Could not read the given file");
         }
         catch (Exception e) {
-            e.printStackTrace();
             System.out.println("Incorrect input");
         }
+        Vars.saveFile = filename;
     }
 
 }

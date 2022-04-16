@@ -10,10 +10,14 @@ import java.util.Arrays;
 
 public class CommandParser {
 
+    public static boolean isBlank(String name) {
+        return name == null || name.isEmpty();
+    }
+
     public static void checkCommandCorrectness(String msg) throws WrongCommandException {
         if (isNull(msg))
             throw new CommandIsNullException();
-        if (msg.isBlank())
+        if (isBlank(msg))
             throw new CommandIsEmptyException();
     }
 
@@ -22,7 +26,7 @@ public class CommandParser {
     }
 
     public static Pair<String, ArrayList<String>> getSplit(String command) {
-        String[] parsed = command.strip().split(" ");
+        String[] parsed = command.trim().split(" ");
         String c = parsed[0];
         ArrayList<String> na = new ArrayList<>();
         for (int i = 1; i < parsed.length; i++)

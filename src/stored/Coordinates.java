@@ -17,6 +17,14 @@ public class Coordinates implements Validateable{
         return y;
     }
 
+    public static boolean validateX(Float x) {
+        return x != null && x <= 46;
+    }
+
+    public static boolean validateY(Integer x) {
+        return x != null;
+    }
+
     @Override
     public String toString() {
         return "(" + this.x + ", " + this.y + ")";

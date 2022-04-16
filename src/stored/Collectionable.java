@@ -18,8 +18,6 @@ public interface Collectionable extends Comparable<Collectionable>, Validateable
 
     LocalDate getStartDate();
 
-    Position getPosition();
-
     Status getStatus();
 
     Person getPerson();

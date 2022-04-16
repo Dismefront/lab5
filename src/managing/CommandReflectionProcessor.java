@@ -1,5 +1,6 @@
 package managing;
 
+import commands.CommandSave;
 import maintain.Pair;
 
 import java.io.File;
@@ -44,7 +45,14 @@ public class CommandReflectionProcessor {
     };
 
     public static boolean launchInput(Scanner scanner) {
-        String inp = scanner.nextLine();
+        String inp = "";
+        try {
+            inp = scanner.nextLine();
+        }
+        catch (Exception ex) {
+            new CommandSave().execute();
+            System.exit(0);
+        }
         Pair<String, ArrayList<String>> command = CommandParser.getSplit(inp);
 
         //String[] lst = listDeclaredCommands();

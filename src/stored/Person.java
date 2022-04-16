@@ -15,7 +15,7 @@ public class Person implements Validateable {
 
     @Override
     public String toString() {
-        return "(" + this.weight + ")";
+        return "(Person weight:" + this.weight + ")";
     }
 
     public Color getEyeColor() {
